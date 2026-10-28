@@ -1,0 +1,1 @@
+{"guilds":{"589446350400135168":{"raid":{"on":false,"count":7,"sec":10,"action":"kick","lockMin":10},"nuke":{"on":false,"count":4,"sec":15},"limit":{"on":true,"count":5,"sec":60},"white":[]},"529011594600914944":{"raid":{"on":true,"count":7,"sec":10,"action":"kick","lockMin":10},"nuke":{"on":true,"count":4,"sec":15},"limit":{"on":true,"count":5,"sec":60},"white":[]}}}

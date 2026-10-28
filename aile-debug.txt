@@ -1,0 +1,139 @@
+===== DENEME SONUÇLARI =====
+deneme 1: HATA: Cannot read properties of undefined (reading 'data')
+deneme 2: HATA: Cannot read properties of undefined (reading 'length')
+deneme 3: HATA: Cannot read properties of undefined (reading 'length')
+deneme 4: HATA: Cannot read properties of undefined (reading 'data')
+deneme 5: HATA: Cannot read properties of undefined (reading 'data')
+
+===== uploadAttachment kaynağı =====
+async uploadAttachment(guildId, channelId, file) {
+        const FormData = require('form-data');
+        const form = new FormData();
+        // form-data expects the buffer directly with options
+        form.append('file', file.data, {
+            filename: file.name,
+            contentType: file.contentType || 'text/plain'
+        });
+        const url = `${this.baseUrl}/bot/guilds/${guildId}/channels/${channelId}/attachments`;
+        console.log(`[REST] Uploading attachment: ${file.name} (${file.data.length} bytes)`);
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bot ${this.token}`,
+                ...form.getHeaders()
+            },
+            body: form.getBuffer()
+        });
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(`API Error ${response.status}: ${error}`);
+        }
+        return response.json();
+    }
+
+===== createMessageWithFile kaynağı =====
+async createMessageWithFile(guildId, channelId, data) {
+        const FormData = require('form-data');
+        const form = new FormData();
+        // Add content if provided
+        if (data.content) {
+            form.append('content', data.content);
+        }
+        // Add embeds if provided (JSON stringified)
+        if (data.embeds && data.embeds.length > 0) {
+            // Process embeds (convert EmbedBuilder instances to JSON, normalize colors etc.)
+            const processedEmbeds = data.embeds.map(embed => {
+                const rawEmbed = typeof embed.toJSON === 'function' ? embed.toJSON() : embed;
+                const processed = { ...rawEmbed };
+                // Normalize color
+                if (typeof processed.color === 'string') {
+                    processed.color = parseInt(processed.color.replace('#', ''), 16);
+                }
+                // Normalize timestamp
+                if (processed.timestamp instanceof Date) {
+                    processed.timestamp = processed.timestamp.toISOString();
+                }
+                else if (typeof processed.timestamp === 'number') {
+                    processed.timestamp = new Date(processed.timestamp).toISOString();
+                }
+                // Normalize footer.iconURL → footer.icon_url
+                if (processed.footer?.iconURL && !processed.footer?.icon_url) {
+                    processed.footer = { ...processed.footer, icon_url: processed.footer.iconURL };
+                    delete processed.footer.iconURL;
+                }
+                // Normalize author.iconURL → author.icon_url
+                if (processed.author?.iconURL && !processed.author?.icon_url) {
+                    processed.author = { ...processed.author, icon_url: processed.author.iconURL };
+                    delete processed.author.iconURL;
+                }
+                return processed;
+            });
+            console.log(`[REST] createMessageWithFile: appending ${processedEmbeds.length} embeds`);
+            form.append('embeds', JSON.stringify(processedEmbeds));
+        }
+        else {
+            console.log(`[REST] createMessageWithFile: no embeds provided (embeds=${data.embeds})`);
+        }
+        // Add components if provided (JSON stringified)
+        if (data.components && data.components.length > 0) {
+            const processedComponents = data.components.map((c) => typeof c.toJSON === 'function' ? c.toJSON() : c);
+            form.append('components', JSON.stringify(processedComponents));
+        }
+        // Add interaction_id if provided (for deferred response matching)
+        if (data.interactionId) {
+            form.append('interaction_id', data.interactionId);
+        }
+        // Add file
+        form.append('files', data.file.data, {
+            filename: data.file.name,
+            contentType: data.file.contentType || 'text/plain'
+        });
+        const url = `${this.baseUrl}/bot/guilds/${guildId}/channels/${channelId}/messages`;
+        console.log(`[REST] Creating message with file: ${data.file.name} (${data.file.data.length} bytes)${data.interactionId ? ` [interaction: ${data.interactionId}]` : ''}`);
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bot ${this.token}`,
+                ...form.getHeaders()
+            },
+            body: form.getBuffer()
+        });
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(`API Error ${response.status}: ${error}`);
+        }
+        return response.json();
+    }
+
+===== createMessage kaynağı =====
+async createMessage(guildIdOrChannelId, channelIdOrData, data) {
+        // İki kullanım şekli:
+        // 1. createMessage(guildId, channelId, data) - guildId ile (tercih edilen)
+        // 2. createMessage(channelId, data) - guildId olmadan (eski format, hata verir)
+        let guildId;
+        let channelId;
+        let messageData;
+        if (typeof channelIdOrData === 'string' && data) {
+            // Yeni format: createMessage(guildId, channelId, data)
+            guildId = guildIdOrChannelId;
+            channelId = channelIdOrData;
+            messageData = this.prepareMessageData(data);
+            // Add interaction_id if provided
+            if (data.interactionId) {
+                messageData.interaction_id = data.interactionId;
+            }
+            // ponytail: Bug #10 - Add flags if provided
+            if (data.flags !== undefined) {
+                messageData.flags = data.flags;
+            }
+        }
+        else if (typeof channelIdOrData === 'object') {
+            // Eski format: createMessage(channelId, data) - guildId yok
+            // Bu format artık desteklenmiyor, hata fırlat
+            throw new Error('createMessage requires guildId: createMessage(guildId, channelId, data)');
+        }
+        else {
+            throw new Error('Invalid createMessage arguments');
+        }
+        return this.request('POST', `/bot/guilds/${guildId}/channels/${channelId}/messages`, messageData);
+    }

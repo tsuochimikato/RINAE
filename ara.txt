@@ -1,0 +1,65 @@
+﻿
+node_modules\@jubbio\core\dist\Client.js:114:                clearTimeout(timeout);
+node_modules\@jubbio\core\dist\Client.js:119:            const timeout = setTimeout(() => {
+node_modules\@jubbio\core\dist\Client.js:193:            setTimeout(() => this.connect(), delay);
+node_modules\@jubbio\core\dist\Client.js:247:                setTimeout(() => this.identify(), 5000);
+node_modules\@jubbio\core\dist\Client.js:252:                setTimeout(() => this.connect(), 1000);
+node_modules\@jubbio\core\dist\enums.js:155:    KickMembers: 1n << 1n,
+node_modules\@jubbio\core\dist\managers\GuildMemberManager.js:70:        const data = await this.client.rest.request('GET', `/guilds/${this.guild.id}/members/${id}`);
+node_modules\@jubbio\core\dist\managers\GuildMemberManager.js:84:        const data = await this.client.rest.request('GET', `/guilds/${this.guild.id}/members?${params}`);
+node_modules\@jubbio\core\dist\managers\GuildMemberManager.js:99:     * Kick a member
+node_modules\@jubbio\core\dist\managers\GuildMemberManager.js:101:    async kick(id, reason) {
+node_modules\@jubbio\core\dist\managers\GuildMemberManager.js:102:        await this.client.rest.request('DELETE', `/guilds/${this.guild.id}/members/${id}`, reason ? { reason } : undefined);
+node_modules\@jubbio\core\dist\managers\GuildMemberManager.js:109:        await this.client.rest.request('PUT', `/guilds/${this.guild.id}/bans/${id}`, {
+node_modules\@jubbio\core\dist\managers\GuildMemberManager.js:119:        await this.client.rest.request('DELETE', `/guilds/${this.guild.id}/bans/${id}`, reason ? { reason } : undefined);
+node_modules\@jubbio\core\dist\managers\GuildMemberManager.js:139:        const result = await this.client.rest.request('PATCH', `/guilds/${this.guild.id}/members/${id}`, body);
+node_modules\@jubbio\core\dist\managers\GuildMemberManager.js:146:        await this.client.rest.request('PUT', `/guilds/${this.guild.id}/members/${memberId}/roles/${roleId}`, reason ? { reason 
+} : undefined);
+node_modules\@jubbio\core\dist\managers\GuildMemberManager.js:152:        await this.client.rest.request('DELETE', `/guilds/${this.guild.id}/members/${memberId}/roles/${roleId}`, reason ? { reas
+on } : undefined);
+node_modules\@jubbio\core\dist\managers\RoleManager.js:113:        const data = await this.client.rest.request('GET', `/guilds/${this.guild.id}/roles`);
+node_modules\@jubbio\core\dist\managers\RoleManager.js:143:        const data = await this.client.rest.request('POST', `/guilds/${this.guild.id}/roles`, body);
+node_modules\@jubbio\core\dist\managers\RoleManager.js:155:        await this.client.rest.request('DELETE', `/guilds/${this.guild.id}/roles/${id}`, reason ? { reason } : undefined);
+node_modules\@jubbio\core\dist\managers\RoleManager.js:180:        const result = await this.client.rest.request('PATCH', `/guilds/${this.guild.id}/roles/${id}`, body);
+node_modules\@jubbio\core\dist\managers\RoleManager.js:188:        const data = await this.client.rest.request('PATCH', `/guilds/${this.guild.id}/roles`, body);
+node_modules\@jubbio\core\dist\rest\REST.js:896:        return this.request('GET', `/bot/guilds/${guildId}/members/${userId}`);
+node_modules\@jubbio\core\dist\rest\REST.js:908:        return this.request('GET', `/bot/guilds/${guildId}/members?${params.toString()}`);
+node_modules\@jubbio\core\dist\rest\REST.js:911:     * Timeout a guild member
+node_modules\@jubbio\core\dist\rest\REST.js:913:    async timeoutMember(guildId, userId, duration, reason) {
+node_modules\@jubbio\core\dist\rest\REST.js:915:            // Clear timeout
+node_modules\@jubbio\core\dist\rest\REST.js:916:            await this.request('POST', `/bot/guilds/${guildId}/members/${userId}/timeout/clear`, {
+node_modules\@jubbio\core\dist\rest\REST.js:921:            // Set timeout
+node_modules\@jubbio\core\dist\rest\REST.js:923:            await this.request('POST', `/bot/guilds/${guildId}/members/${userId}/timeout`, {
+node_modules\@jubbio\core\dist\rest\REST.js:930:     * Kick a guild member
+node_modules\@jubbio\core\dist\rest\REST.js:932:    async kickMember(guildId, userId, reason) {
+node_modules\@jubbio\core\dist\rest\REST.js:934:        await this.request('DELETE', `/bot/guilds/${guildId}/members/${userId}${query}`);
+node_modules\@jubbio\core\dist\rest\REST.js:940:        await this.request('PUT', `/bot/guilds/${guildId}/bans/${userId}`, {
+node_modules\@jubbio\core\dist\rest\REST.js:951:        await this.request('DELETE', `/bot/guilds/${guildId}/bans/${userId}${query}`);
+node_modules\@jubbio\core\dist\rest\REST.js:957:        return this.request('PATCH', `/bot/guilds/${guildId}/members/${userId}`, data);
+node_modules\@jubbio\core\dist\rest\REST.js:972:        await this.request('PUT', `/bot/guilds/${guildId}/members/${userId}/roles/${roleId}${query}`);
+node_modules\@jubbio\core\dist\rest\REST.js:979:        await this.request('DELETE', `/bot/guilds/${guildId}/members/${userId}/roles/${roleId}${query}`);
+node_modules\@jubbio\core\dist\rest\REST.js:985:        return this.request('PUT', `/bot/guilds/${guildId}/members/roles/assign`, { assignments });
+node_modules\@jubbio\core\dist\rest\REST.js:991:        return this.request('DELETE', `/bot/guilds/${guildId}/members/roles/remove`, { removals });
+node_modules\@jubbio\core\dist\rest\REST.js:1012:        return this.request('GET', `/bot/guilds/${guildId}/roles`);
+node_modules\@jubbio\core\dist\rest\REST.js:1018:        return this.request('POST', `/bot/guilds/${guildId}/roles`, data);
+node_modules\@jubbio\core\dist\rest\REST.js:1024:        return this.request('PATCH', `/bot/guilds/${guildId}/roles/${roleId}`, data);
+node_modules\@jubbio\core\dist\rest\REST.js:1030:        await this.request('DELETE', `/bot/guilds/${guildId}/roles/${roleId}`);
+node_modules\@jubbio\core\dist\rest\REST.js:1042:        return this.request('GET', `/bot/guilds/${guildId}/bans`);
+node_modules\@jubbio\core\dist\rest\REST.js:1048:        return this.request('GET', `/bot/guilds/${guildId}/bans/${userId}`);
+node_modules\@jubbio\core\dist\sharding\ShardingManager.js:57:    async spawn(timeout = 30000) {
+node_modules\@jubbio\core\dist\sharding\ShardingManager.js:71:            const timer = setTimeout(() => {
+node_modules\@jubbio\core\dist\sharding\ShardingManager.js:73:            }, timeout);
+node_modules\@jubbio\core\dist\sharding\ShardingManager.js:75:                clearTimeout(timer);
+node_modules\@jubbio\core\dist\sharding\ShardingManager.js:79:                clearTimeout(timer);
+node_modules\@jubbio\core\dist\sharding\ShardingManager.js:102:            await new Promise(r => setTimeout(r, options.delay));
+node_modules\@jubbio\core\dist\sharding\ShardingManager.js:104:        return this.spawn(options?.timeout);
+node_modules\@jubbio\core\dist\sharding\ShardingManager.js:246:            await shard.spawn(options?.timeout);
+node_modules\@jubbio\core\dist\sharding\ShardingManager.js:248:                await new Promise(r => setTimeout(r, delay));
+node_modules\@jubbio\core\dist\sharding\ShardingManager.js:294:            await shard.respawn({ delay: options?.respawnDelay, timeout: options?.timeout });
+node_modules\@jubbio\core\dist\sharding\ShardingManager.js:296:                await new Promise(r => setTimeout(r, options.shardDelay));
+node_modules\@jubbio\core\dist\structures\GuildMember.js:12:    KickMembers: 1n << 1n,
+node_modules\@jubbio\core\dist\utils\Collector.js:30:    /** Timeout for time limit */
+node_modules\@jubbio\core\dist\utils\Collector.js:31:    _timeout = null;
+node_modules\@jubbio\core\dist\utils\Collector.js:32:    /** Timeout for idle limit */
+
+

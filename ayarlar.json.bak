@@ -1,0 +1,59 @@
+{
+  "logChannels": {
+    "529011594600914944": "635217666017079296"
+  },
+  "logGuildId": null,
+  "adFilterEnabled": true,
+  "profanityEnabled": true,
+  "spamEnabled": true,
+  "wholeWordOnly": true,
+  "bannedWords": [],
+  "strikes": {
+    "529011594600914944:22016": 2,
+    "529011594600914944:11210": 4,
+    "529011594600914944:24408": 1,
+    "529011594600914944:18641": 3,
+    "529011594600914944:25711": 1,
+    "529011594600914944:21276": 2
+  },
+  "adStrikes": {},
+  "registration": {
+    "guildId": null,
+    "channelId": null,
+    "registeredRoleId": null,
+    "unregisteredRoleId": null,
+    "genders": {
+      "kadin": {
+        "label": "Kadın",
+        "roleId": "635848165643264000"
+      },
+      "erkek": {
+        "label": "Erkek",
+        "roleId": null
+      },
+      "diger": {
+        "label": "Belirtmek istemiyorum",
+        "roleId": null
+      }
+    },
+    "ages": [
+      {
+        "label": "18 yaş altı",
+        "roleId": null
+      },
+      {
+        "label": "18-24",
+        "roleId": null
+      },
+      {
+        "label": "25-34",
+        "roleId": null
+      },
+      {
+        "label": "35+",
+        "roleId": null
+      }
+    ],
+    "interests": []
+  }
+}
